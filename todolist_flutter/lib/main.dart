@@ -8,12 +8,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'To Do List App',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyToDoList(title: 'Flutter Demo Home Page'),
+      home: MyToDoList(),
     );
   }
 }
@@ -24,9 +24,47 @@ class MyToDoList extends StatefulWidget {
 }
 
 class _MyToDoListState extends State<MyToDoList> {
+  Container MyAddButton = Container(
+    width: 200.0,
+    height: 200.0,
+    child: new RawMaterialButton(
+      shape: new CircleBorder(),
+      elevation: 0.0,
+      child: Icon(
+        Icons.add,
+        color: Colors.blue,
+      ),
+      onPressed: (){}),
+  );
+
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('My To Do List'),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+
+        },
+        child: Icon(Icons.add),
+        backgroundColor: Colors.blue,
+      ),
+      bottomNavigationBar: BottomAppBar(
+        shape: CircularNotchedRectangle(),
+        notchMargin: 8.0,
+        child: new Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+             IconButton(icon: Icon(Icons.menu), onPressed: () {},),
+             IconButton(icon: Icon(Icons.search), onPressed: () {},),
+          ],
+        ),
+        color: Colors.white,
+      ),
+    );
   }
 }
 
