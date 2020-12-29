@@ -24,18 +24,7 @@ class MyToDoList extends StatefulWidget {
 }
 
 class _MyToDoListState extends State<MyToDoList> {
-  Container MyAddButton = Container(
-    width: 200.0,
-    height: 200.0,
-    child: new RawMaterialButton(
-      shape: new CircleBorder(),
-      elevation: 0.0,
-      child: Icon(
-        Icons.add,
-        color: Colors.blue,
-      ),
-      onPressed: (){}),
-  );
+  final List<String> _ToDoList = <String>[];
 
   @override
   Widget build(BuildContext context) {
@@ -45,12 +34,11 @@ class _MyToDoListState extends State<MyToDoList> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-
-        },
+        onPressed: _addToDoList,
         child: Icon(Icons.add),
         backgroundColor: Colors.blue,
       ),
+      body: _buildToDoList(),
       bottomNavigationBar: BottomAppBar(
         shape: CircularNotchedRectangle(),
         notchMargin: 8.0,
@@ -58,13 +46,43 @@ class _MyToDoListState extends State<MyToDoList> {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-             IconButton(icon: Icon(Icons.menu), onPressed: () {},),
-             IconButton(icon: Icon(Icons.search), onPressed: () {},),
+            IconButton(icon: Icon(Icons.menu), onPressed: () {},),
+            IconButton(icon: Icon(Icons.search), onPressed: () {},),
           ],
         ),
         color: Colors.white,
       ),
     );
   }
-}
 
+  void _addToDoList() {
+
+
+    setState(() {
+      _ToDoList.add("ABCDEF");
+    });
+  }
+
+  Widget _buildToDoList() {
+    return ListView.builder(
+        padding: const EdgeInsets.all(16),
+        itemCount: _ToDoList.length,
+        itemBuilder: (BuildContext _context, int i) {
+          return _buildRowToDo(_ToDoList[i]);
+        }
+    );
+  }
+
+  Widget _buildRowToDo(String ToDoVar) {
+    return Column(
+      children: [
+        ListTile(
+          title: Text(
+              ToDoVar
+          ),
+        ),
+        Divider(),
+      ],
+    );
+  }
+}
