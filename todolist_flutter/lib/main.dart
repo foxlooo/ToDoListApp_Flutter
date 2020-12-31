@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 void main() {
   runApp(MyApp());
@@ -55,12 +56,48 @@ class _MyToDoListState extends State<MyToDoList> {
     );
   }
 
+  void _addListPopUp(context) {
+    final myController = TextEditingController();
+
+    @override
+    void dispose() {
+      myController.dispose();
+      super.dispose();
+    }
+
+    Alert(
+        context: context,
+        title: "Add To Do List:",
+        content: Column(
+          children: <Widget>[
+            TextField(
+              controller: myController,
+              // decoration: InputDecoration(
+              //   icon: Icon(Icons.account_circle),
+              //   labelText: 'To Do: ',
+              // ),
+            ),
+          ],
+        ),
+        image: Image.asset("assets/success.png"),
+        buttons: [
+          DialogButton(
+            onPressed: () {
+              setState(() {
+                _ToDoList.add(myController.text);
+              });
+              Navigator.pop(context);
+            },
+            child: Text(
+              "Add",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+          )
+        ]).show();
+  }
+
   void _addToDoList() {
-
-
-    setState(() {
-      _ToDoList.add("ABCDEF");
-    });
+    _addListPopUp(context);
   }
 
   Widget _buildToDoList() {
@@ -77,6 +114,14 @@ class _MyToDoListState extends State<MyToDoList> {
     return Column(
       children: [
         ListTile(
+          leading: Container(
+            width: 30,
+            height: 30,
+            //child: Icon(Icons.check, size: 10,),
+            decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.grey),
+          ),
           title: Text(
               ToDoVar
           ),
