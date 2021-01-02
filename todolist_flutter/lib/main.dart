@@ -110,14 +110,25 @@ class _MyToDoListState extends State<MyToDoList> {
     );
   }
 
+  IconData currentIcon = Icons.check_box_outline_blank;
+
   Widget _buildRowToDo(String ToDoVar) {
+
     return Column(
       children: [
         ListTile(
           leading: Container(
             width: 30,
             height: 30,
-            //child: Icon(Icons.check, size: 10,),
+            child: IconButton(
+              icon: Icon(currentIcon, size: 10),
+              onPressed: () {
+                setState(() {
+                  currentIcon = Icons.check;
+                  _ToDoList.remove(ToDoVar);
+                });
+              }
+            ),
             decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: Colors.grey),
