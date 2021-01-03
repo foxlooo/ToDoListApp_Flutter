@@ -79,7 +79,6 @@ class _MyToDoListState extends State<MyToDoList> {
             ),
           ],
         ),
-        image: Image.asset("assets/success.png"),
         buttons: [
           DialogButton(
             onPressed: () {
@@ -105,14 +104,12 @@ class _MyToDoListState extends State<MyToDoList> {
         padding: const EdgeInsets.all(16),
         itemCount: _ToDoList.length,
         itemBuilder: (BuildContext _context, int i) {
-          return _buildRowToDo(_ToDoList[i]);
+          return _buildRowToDo(_ToDoList[i], i);
         }
     );
   }
 
-  IconData currentIcon = Icons.check_box_outline_blank;
-
-  Widget _buildRowToDo(String ToDoVar) {
+  Widget _buildRowToDo(String ToDoVar, int index) {
 
     return Column(
       children: [
@@ -121,11 +118,10 @@ class _MyToDoListState extends State<MyToDoList> {
             width: 30,
             height: 30,
             child: IconButton(
-              icon: Icon(currentIcon, size: 10),
+              icon: Icon(Icons.check_box_outline_blank, size: 10),
               onPressed: () {
                 setState(() {
-                  currentIcon = Icons.check;
-                  _ToDoList.remove(ToDoVar);
+                  _promptRemoveTodoItem(index);
                 });
               }
             ),
@@ -136,9 +132,40 @@ class _MyToDoListState extends State<MyToDoList> {
           title: Text(
               ToDoVar
           ),
+          onTap: () {
+            setState(() {
+              _ToDoList[index] = "edited";
+            });
+          }
         ),
         Divider(),
       ],
+    );
+  }
+
+  void _promptRemoveTodoItem(int index) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return new AlertDialog(
+              title: new Text('Mark "${_ToDoList[index]}" as done?'),
+              actions: <Widget>[
+                new FlatButton(
+                    child: new Text('CANCEL'),
+                    onPressed: () => Navigator.of(context).pop()
+                ),
+                new FlatButton(
+                    child: new Text('MARK AS DONE'),
+                    onPressed: () {
+                      setState(() {
+                        _ToDoList.removeAt(index);
+                      });
+                      Navigator.of(context).pop();
+                    }
+                )
+              ]
+          );
+        }
     );
   }
 }
