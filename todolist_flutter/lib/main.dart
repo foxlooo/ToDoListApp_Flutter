@@ -99,6 +99,45 @@ class _MyToDoListState extends State<MyToDoList> {
     _addListPopUp(context);
   }
 
+  void _changeToDoList(context, int index) {
+    final myController = TextEditingController(text: _ToDoList[index]);
+
+    @override
+    void dispose() {
+      myController.dispose();
+      super.dispose();
+    }
+
+    Alert(
+        context: context,
+        title: "Change to do List:",
+        content: Column(
+          children: <Widget>[
+            TextField(
+              controller: myController,
+              // decoration: InputDecoration(
+              //   icon: Icon(Icons.account_circle),
+              //   labelText: 'To Do: ',
+              // ),
+            ),
+          ],
+        ),
+        buttons: [
+          DialogButton(
+            onPressed: () {
+              setState(() {
+                _ToDoList[index] = myController.text;
+              });
+              Navigator.pop(context);
+            },
+            child: Text(
+              "Edit",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+          )
+        ]).show();
+  }
+
   Widget _buildToDoList() {
     return ListView.builder(
         padding: const EdgeInsets.all(16),
@@ -134,7 +173,7 @@ class _MyToDoListState extends State<MyToDoList> {
           ),
           onTap: () {
             setState(() {
-              _ToDoList[index] = "edited";
+              _changeToDoList(context, index);
             });
           }
         ),
