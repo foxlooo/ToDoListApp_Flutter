@@ -153,6 +153,14 @@ class _MyToDoListState extends State<MyToDoList> {
     return Column(
       children: [
         ListTile(
+          trailing: IconButton(
+            icon: Icon(Icons.close, size: 30),
+            onPressed: () {
+              setState(() {
+                _ToDoList.removeAt(index);
+              });
+            }
+          ),
           leading: Container(
             width: 30,
             height: 30,
